@@ -145,6 +145,9 @@ struct EnqueuedMsgDescr {
     return false;
   }
   bool unpack(vm::CellSlice& cs);
+  bool same_workchain() const {
+    return cur_prefix_.workchain == next_prefix_.workchain;
+  }
 };
 
 using compute_shard_end_lt_func_t = std::function<ton::LogicalTime(ton::AccountIdPrefixFull)>;
@@ -381,7 +384,7 @@ struct ShardState {
   int global_id_;
   ton::UnixTime utime_;
   ton::LogicalTime lt_;
-  ton::BlockSeqno mc_blk_seqno_, min_ref_mc_seqno_;
+  ton::BlockSeqno mc_blk_seqno_, min_ref_mc_seqno_, vert_seqno_;
   ton::BlockIdExt mc_blk_ref_;
   ton::LogicalTime mc_blk_lt_;
   bool before_split_{false};
