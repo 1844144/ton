@@ -14,21 +14,22 @@
     You should have received a copy of the GNU Lesser General Public License
     along with TON Blockchain Library.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2017-2019 Telegram Systems LLP
+    Copyright 2017-2020 Telegram Systems LLP
 */
 #pragma once
 
 #include "tonlib/LastBlock.h"
 
+#include "tonlib/KeyValue.h"
+
 namespace tonlib {
 class LastBlockStorage {
  public:
-  td::Status set_directory(std::string directory);
+  void set_key_value(std::shared_ptr<KeyValue> kv);
   td::Result<LastBlockState> get_state(td::Slice name);
   void save_state(td::Slice name, LastBlockState state);
 
  private:
-  std::string directory_;
-  std::string get_file_name(td::Slice name);
+  std::shared_ptr<KeyValue> kv_;
 };
 }  // namespace tonlib
